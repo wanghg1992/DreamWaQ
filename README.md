@@ -8,7 +8,7 @@
 git clone https://github.com/fan-ziqi/rl_docker
 ```
 
-参考https://github.com/fan-ziqi/rl_docker进入docker后，运行脚本
+按照 https://github.com/fan-ziqi/rl_docker 仓库中的readme进入docker后，运行脚本
 
 ```bash
 python run_dreamwaq.py --headless
