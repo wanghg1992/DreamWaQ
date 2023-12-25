@@ -32,6 +32,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from collections import defaultdict
 from multiprocessing import Process, Value
+from visualization.play_visualize import * 
 
 class Logger:
     def __init__(self, dt):
@@ -60,6 +61,10 @@ class Logger:
 
     def plot_states(self):
         self.plot_process = Process(target=self._plot)
+        self.plot_process.start()
+
+    def new_plot_states(self):
+        self.plot_process = Process(target = self._new_plot)    
         self.plot_process.start()
 
     def _plot(self):
@@ -124,6 +129,37 @@ class Logger:
         a.set(xlabel='time [s]', ylabel='Joint Torque [Nm]', title='Torque')
         a.legend()
         plt.show()
+
+    def _new_plot(self):
+        log = self.state_log 
+        for k,v in log.items():
+            log[k] = np.array(v) 
+            print(k,log[k].shape)
+            
+        plot_dof_pos(
+            dof_pos_list=log["dof_pos"],
+            tar_dof_pos_list=log["dof_pos_target"],
+        )
+        plot_dof_vel(
+            dof_vel_list=log["dof_vel"],
+        )
+        plot_base(
+            base_lin_vel_list=log["base_vel"],
+            base_ang_vel_list=log["base_ang_vel"],
+            base_quat_list=log["base_quat"],
+            foot_contact_list=log["foot_contact"],
+        )
+        plot_command(
+            command_list=log["command"],
+            base_lin_vel_list=log["base_vel"],
+            base_ang_vel_list=log["base_ang_vel"],
+        )
+        plot_action(
+            action_list=log["action"],
+        )
+        plot_dof_torque(
+            torque_list=log["dof_torque"],
+        )
 
     def print_rewards(self):
         print("Average rewards per second:")

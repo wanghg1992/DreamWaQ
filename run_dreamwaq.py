@@ -63,7 +63,7 @@ def play(arg, path = None):
 if __name__ == '__main__':
     args = get_args()
     if args.play:
-        path = "logs/DreamWaQ/Dec25_07-07-30_Test/model_1000.pt"
+        path = "legged_gym/logs/DreamWaQ/1225/model_5000.pt"
         play(args,path)
         exit()
     else:
